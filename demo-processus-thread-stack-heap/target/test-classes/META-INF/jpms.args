@@ -1,0 +1,4 @@
+--patch-module
+com.example.demo.processus.thread.stack.heap=_
+--add-reads
+com.example.demo.processus.thread.stack.heap=ALL-UNNAMED
