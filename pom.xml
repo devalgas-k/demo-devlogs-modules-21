@@ -19,6 +19,8 @@
         <module>demo-jdto-vs-records</module>
         <module>demo-jpms-main</module>
         <module>demo-processus-thread-stack-heap</module>
+        <module>demo-offsetdatetime-iso8601</module>
+        <module>demo-n-plus-one</module>
     </modules>
 
     <properties>
