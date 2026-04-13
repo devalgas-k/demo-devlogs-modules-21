@@ -6,23 +6,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="demo-offsetdatetime-iso8601" />
-        <module name="demo-jdto-vs-records" />
-        <module name="demo-n-plus-one" />
-        <module name="demo-jpms-main" />
         <module name="demo-qualifier-conditional-property" />
-        <module name="demo-processus-thread-stack-heap" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="demo-devlogs-modules-21" options="-parameters" />
-      <module name="demo-jdto-vs-records" options="-parameters" />
-      <module name="demo-jpms-main" options="-parameters" />
-      <module name="demo-n-plus-one" options="-parameters" />
-      <module name="demo-offsetdatetime-iso8601" options="-parameters" />
-      <module name="demo-processus-thread-stack-heap" options="-parameters" />
       <module name="demo-qualifier-conditional-property" options="-parameters" />
     </option>
   </component>
