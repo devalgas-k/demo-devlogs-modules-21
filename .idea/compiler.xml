@@ -8,15 +8,17 @@
         <outputRelativeToContentRoot value="true" />
         <module name="demo-offsetdatetime-iso8601" />
         <module name="demo-jdto-vs-records" />
-        <module name="demo-n-plus-one" />
         <module name="demo-jpms-main" />
-        <module name="demo-qualifier-conditional-property" />
         <module name="demo-processus-thread-stack-heap" />
+        <module name="demo-n-plus-one" />
+        <module name="demo-crash-boot" />
+        <module name="demo-qualifier-conditional-property" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="demo-crash-boot" options="-parameters" />
       <module name="demo-devlogs-modules-21" options="-parameters" />
       <module name="demo-jdto-vs-records" options="-parameters" />
       <module name="demo-jpms-main" options="-parameters" />

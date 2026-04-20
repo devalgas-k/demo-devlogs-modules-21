@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/demo-crash-boot/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/demo-jdto-vs-records/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/demo-jpms-main/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/demo-n-plus-one/src/main/java" charset="UTF-8" />

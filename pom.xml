@@ -22,6 +22,7 @@
         <module>demo-offsetdatetime-iso8601</module>
         <module>demo-n-plus-one</module>
         <module>demo-qualifier-conditional-property</module>
+        <module>demo-crash-boot</module>
     </modules>
 
     <properties>
