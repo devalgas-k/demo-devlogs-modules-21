@@ -8,6 +8,7 @@
     <file url="file://$PROJECT_DIR$/demo-offsetdatetime-iso8601/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/demo-processus-thread-stack-heap/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/demo-qualifier-conditional-property/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/demo-transaction-interruptions/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
   </component>

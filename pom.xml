@@ -23,6 +23,7 @@
         <module>demo-n-plus-one</module>
         <module>demo-qualifier-conditional-property</module>
         <module>demo-crash-boot</module>
+        <module>demo-transaction-interruptions</module>
     </modules>
 
     <properties>
@@ -31,14 +32,6 @@
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.13.0</version>
-                <configuration>
-                    <release>${java.version}</release>
-                </configuration>
-            </plugin>
         </plugins>
     </build>
 </project>
