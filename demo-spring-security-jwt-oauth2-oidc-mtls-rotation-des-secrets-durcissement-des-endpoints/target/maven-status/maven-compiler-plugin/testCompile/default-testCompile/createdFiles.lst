@@ -1,0 +1,6 @@
+com/example/demo/ModeBJwtNotBeforeTest.class
+com/example/demo/ModeAOpaqueIntrospectionCachedTest.class
+com/example/demo/ModeBJwtRotationTest.class
+com/example/demo/ModeAOpaqueIntrospectionTest.class
+com/example/demo/ModeBJwtNoKidTest.class
+com/example/demo/ModeBJwtValidationFailuresTest.class

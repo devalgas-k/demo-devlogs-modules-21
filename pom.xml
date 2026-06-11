@@ -24,6 +24,7 @@
         <module>demo-qualifier-conditional-property</module>
         <module>demo-crash-boot</module>
         <module>demo-transaction-interruptions</module>
+        <module>demo-spring-security-jwt-oauth2-oidc-mtls-rotation-des-secrets-durcissement-des-endpoints</module>
     </modules>
 
     <properties>
