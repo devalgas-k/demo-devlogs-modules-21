@@ -1,6 +1,0 @@
-/Users/devalgas/Documents/projets/perso/bmad/devlog/projets/demo-spring-security-jwt-oauth2-oidc-mtls-rotation-des-secrets-durcissement-des-endpoints/src/test/java/com/example/demo/ModeAOpaqueIntrospectionCachedTest.java
-/Users/devalgas/Documents/projets/perso/bmad/devlog/projets/demo-spring-security-jwt-oauth2-oidc-mtls-rotation-des-secrets-durcissement-des-endpoints/src/test/java/com/example/demo/ModeAOpaqueIntrospectionTest.java
-/Users/devalgas/Documents/projets/perso/bmad/devlog/projets/demo-spring-security-jwt-oauth2-oidc-mtls-rotation-des-secrets-durcissement-des-endpoints/src/test/java/com/example/demo/ModeBJwtNoKidTest.java
-/Users/devalgas/Documents/projets/perso/bmad/devlog/projets/demo-spring-security-jwt-oauth2-oidc-mtls-rotation-des-secrets-durcissement-des-endpoints/src/test/java/com/example/demo/ModeBJwtNotBeforeTest.java
-/Users/devalgas/Documents/projets/perso/bmad/devlog/projets/demo-spring-security-jwt-oauth2-oidc-mtls-rotation-des-secrets-durcissement-des-endpoints/src/test/java/com/example/demo/ModeBJwtRotationTest.java
-/Users/devalgas/Documents/projets/perso/bmad/devlog/projets/demo-spring-security-jwt-oauth2-oidc-mtls-rotation-des-secrets-durcissement-des-endpoints/src/test/java/com/example/demo/ModeBJwtValidationFailuresTest.java
