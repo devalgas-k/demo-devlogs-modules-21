@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <title>Architecture Overview - MCP Spring Boot</title>
+  <desc>Diagramme de l'architecture MCP Spring Boot avec les composants principaux</desc>
+
+  <style>
+    .label { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 14px; fill: #e5e7eb; }
+    .label-small { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 12px; fill: #9ca3af; }
+    .title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 18px; font-weight: 600; fill: #f3f4f6; }
+  </style>
+
+  <!-- Fond sombre -->
+  <rect width="800" height="600" fill="#1f2937"/>
+
+  <!-- CLIENT -->
+  <rect x="280" y="30" width="240" height="50" rx="8" ry="8" fill="#3b82f6" stroke="#60a5fa" stroke-width="1.5"/>
+  <text x="400" y="60" text-anchor="middle" class="label" font-weight="500">CLIENT (LLM / Claude Desktop)</text>
+
+  <!-- Ligne de connexion -->
+  <line x1="400" y1="80" x2="400" y2="120" stroke="#4b5563" stroke-width="2" stroke-dasharray="4,4"/>
+
+  <!-- McpServerEndpoint -->
+  <rect x="300" y="130" width="200" height="45" rx="8" ry="8" fill="#1e40af" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="400" y="157" text-anchor="middle" class="label">McpServerEndpoint</text>
+  <text x="400" y="170" text-anchor="middle" class="label-small">(REST / SSE)</text>
+
+  <!-- Ligne de connexion -->
+  <line x1="400" y1="175" x2="400" y2="210" stroke="#4b5563" stroke-width="2" stroke-dasharray="4,4"/>
+
+  <!-- McpMessageHandler -->
+  <rect x="300" y="220" width="200" height="45" rx="8" ry="8" fill="#1e40af" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="400" y="247" text-anchor="middle" class="label">McpMessageHandler</text>
+
+  <!-- Lignes vers les registries -->
+  <line x1="300" y1="242" x2="150" y2="280" stroke="#4b5563" stroke-width="2"/>
+  <line x1="400" y1="265" x2="400" y2="280" stroke="#4b5563" stroke-width="2"/>
+  <line x1="500" y1="242" x2="650" y2="280" stroke="#4b5563" stroke-width="2"/>
+
+  <!-- REGISTRIES -->
+  <rect x="80" y="290" width="140" height="80" rx="8" ry="8" fill="#374151" stroke="#6b7280" stroke-width="1.5"/>
+  <text x="150" y="325" text-anchor="middle" class="label">ToolRegistry</text>
+  <text x="150" y="345" text-anchor="middle" class="label-small">Outils MCP</text>
+
+  <rect x="330" y="290" width="140" height="80" rx="8" ry="8" fill="#374151" stroke="#6b7280" stroke-width="1.5"/>
+  <text x="400" y="325" text-anchor="middle" class="label">ResourceRegistry</text>
+  <text x="400" y="345" text-anchor="middle" class="label-small">Ressources</text>
+
+  <rect x="580" y="290" width="140" height="80" rx="8" ry="8" fill="#374151" stroke="#6b7280" stroke-width="1.5"/>
+  <text x="650" y="325" text-anchor="middle" class="label">PromptRegistry</text>
+  <text x="650" y="345" text-anchor="middle" class="label-small">Prompts</text>
+
+  <!-- Lignes vers Spring AI -->
+  <line x1="150" y1="370" x2="150" y2="420" stroke="#4b5563" stroke-width="2"/>
+  <line x1="400" y1="370" x2="400" y2="420" stroke="#4b5563" stroke-width="2"/>
+  <line x1="650" y1="370" x2="650" y2="420" stroke="#4b5563" stroke-width="2"/>
+
+  <!-- Spring AI Layer -->
+  <rect x="80" y="430" width="640" height="140" rx="12" ry="12" fill="#1f2937" stroke="#3b82f6" stroke-width="2"/>
+  <text x="400" y="455" text-anchor="middle" class="title">Spring AI Layer</text>
+
+  <!-- Providers -->
+  <rect x="120" y="480" width="160" height="60" rx="8" ry="8" fill="#065f46" stroke="#10b981" stroke-width="1.5"/>
+  <text x="200" y="508" text-anchor="middle" class="label">OpenAI</text>
+  <text x="200" y="525" text-anchor="middle" class="label-small">GPT-4 / GPT-3.5</text>
+
+  <rect x="320" y="480" width="160" height="60" rx="8" ry="8" fill="#5b21b6" stroke="#a78bfa" stroke-width="1.5"/>
+  <text x="400" y="508" text-anchor="middle" class="label">Anthropic</text>
+  <text x="400" y="525" text-anchor="middle" class="label-small">Claude 3</text>
+
+  <rect x="520" y="480" width="160" height="60" rx="8" ry="8" fill="#78350f" stroke="#f59e0b" stroke-width="1.5"/>
+  <text x="600" y="508" text-anchor="middle" class="label">Ollama</text>
+  <text x="600" y="525" text-anchor="middle" class="label-small">Modèles locaux</text>
+</svg>
