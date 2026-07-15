@@ -1,6 +1,6 @@
 # spring-ai-mcp-server
 
-[![Build Status](https://img.shields.io/badge/build-passing-brightgreen)](https://github.com/devalgas-k/demo-devlogs-modules-21/tree/master/mcp-spring-boot-spring-ai-demo)
+[![Build Status](https://img.shields.io/badge/build-passing-brightgreen)](https://github.com/devalgas-k/spring-ai-mcp-server)
 [![Java Version](https://img.shields.io/badge/Java-17%2B-blue)](https://adoptium.net/)
 [![Spring Boot Version](https://img.shields.io/badge/Spring%20Boot-3.3.0-green)](https://spring.io/projects/spring-boot)
 [![License](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
@@ -194,7 +194,7 @@ The server will be accessible at `http://localhost:11434`.
 ### 4.1 Clone the Project
 
 ```bash
-git clone https://github.com/devalgas-k/demo-devlogs-modules-21/tree/master/mcp-spring-boot-spring-ai-demo.git
+git clone https://github.com/devalgas-k/spring-ai-mcp-server.git
 cd spring-ai-mcp-server
 ```
 
@@ -706,7 +706,7 @@ git clone https://github.com/your-fork/spring-ai-mcp-server.git
 cd spring-ai-mcp-server
 
 # Add upstream remote
-git remote add upstream https://github.com/devalgas-k/demo-devlogs-modules-21/tree/master/mcp-spring-boot-spring-ai-demo.git
+git remote add upstream https://github.com/devalgas-k/spring-ai-mcp-server.git
 
 # Create feature branch
 git checkout -b feature/new-feature
