@@ -12,6 +12,9 @@
         <module name="demo-jpms-main" />
         <module name="demo-string-concat-vs-stringbuilder" />
         <module name="demo-processus-thread-stack-heap" />
+        <module name="demo-spring-beans-2026" />
+        <module name="list-of-vs-arrays-aslist-demo" />
+        <module name="spring-ai-mcp-server" />
         <module name="demo-n-plus-one" />
         <module name="demo-crash-boot" />
         <module name="demo-qualifier-conditional-property" />
@@ -38,9 +41,12 @@
       <module name="demo-offsetdatetime-iso8601" options="-parameters" />
       <module name="demo-processus-thread-stack-heap" options="-parameters" />
       <module name="demo-qualifier-conditional-property" options="-parameters" />
+      <module name="demo-spring-beans-2026" options="-parameters" />
       <module name="demo-spring-security-jwt-oauth2-oidc-mtls-rotation-des-secrets-durcissement-des-endpoints" options="-parameters" />
       <module name="demo-string-concat-vs-stringbuilder" options="-parameters" />
       <module name="demo-transaction-interruptions" options="-parameters" />
+      <module name="list-of-vs-arrays-aslist-demo" options="-parameters" />
+      <module name="spring-ai-mcp-server" options="-parameters" />
     </option>
   </component>
 </project>

@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: list-of-vs-arrays-aslist-demo
+
+logging:
+  level:
+    root: INFO
+    com.example.listdemo: DEBUG

@@ -1,0 +1,447 @@
+# =============================================================================
+# Spring AI MCP Server - Configuration Production
+# =============================================================================
+# Documentation: https://docs.spring.io/spring-ai/reference/
+# MCP Spec: https://modelcontextprotocol.io/
+#
+# IMPORTANT - Gestion des Secrets:
+# Les secrets (API keys) sont injectés via variables d'environnement pour le dev.
+# En production, utiliser impérativement:
+#   - Kubernetes Secrets (Mounted or Env vars)
+#   - HashiCorp Vault
+#   - AWS Secrets Manager / GCP Secret Manager / Azure Key Vault
+#   - NE JAMAIS commiter de secrets dans le code ou config
+# =============================================================================
+
+spring:
+  application:
+    name: spring-ai-mcp-server
+    
+  #===========================================================================
+  # Spring AI - Multi-Provider Configuration
+  #===========================================================================
+  ai:
+    
+    # ------------------------------------------------------------------------
+    # OpenAI Configuration (Provider Principal)
+    # ------------------------------------------------------------------------
+    # API Key: OPENAI_API_KEY (variable d'environnement)
+    openai:
+      api-key: ${OPENAI_API_KEY:}
+      base-url: ${OPENAI_BASE_URL:https://api.openai.com/v1}
+      chat-model: ${OPENAI_CHAT_MODEL:gpt-4o}
+      # Timeout pour les appels API (doit être coordonné avec tool timeout)
+      timeout: ${OPENAI_TIMEOUT:60s}
+      # Options par défaut pour les requêtes
+      options:
+        temperature: 0.7
+        max-tokens: 2048
+        top-p: 1.0
+        frequency-penalty: 0.0
+        presence-penalty: 0.0
+
+    # ------------------------------------------------------------------------
+    # Anthropic Configuration (Provider Fallback)
+    # ------------------------------------------------------------------------
+    # API Key: ANTHROPIC_API_KEY (variable d'environnement)
+    anthropic:
+      api-key: ${ANTHROPIC_API_KEY:}
+      base-url: ${ANTHROPIC_BASE_URL:https://api.anthropic.com}
+      chat-model: ${ANTHROPIC_CHAT_MODEL:claude-3-5-sonnet-20240620}
+      # Timeout pour les appels API
+      timeout: ${ANTHROPIC_TIMEOUT:60s}
+      # Options par défaut
+      options:
+        temperature: 0.7
+        max-tokens: 2048
+
+    # ------------------------------------------------------------------------
+    # Ollama Configuration (Développement Local - Gratuit)
+    # ------------------------------------------------------------------------
+    # Aucune API key requise pour usage local
+    # Installation: https://ollama.ai/
+    # Modèle recommandé: ollama pull llama3
+    ollama:
+      base-url: ${OLLAMA_BASE_URL:http://localhost:11434}
+      chat-model: ${OLLAMA_CHAT_MODEL:llama3}
+      # Timeout plus long pour les modèles locaux
+      timeout: ${OLLAMA_TIMEOUT:120s}
+      # Options par défaut
+      options:
+        temperature: 0.7
+        num-ctx: 4096
+
+# =============================================================================
+# MCP Server Configuration
+# =============================================================================
+mcp:
+  # ---------------------------------------------------------------------------
+  # Server Settings
+  # ---------------------------------------------------------------------------
+  server:
+    name: ${MCP_SERVER_NAME:spring-ai-mcp-server}
+    version: ${MCP_SERVER_VERSION:1.0.0}
+    
+  # Transport: http-sse (scalable, stateless, load-balancer friendly)
+  transport: http-sse
+  
+  # ---------------------------------------------------------------------------
+  # Tool Execution Settings
+  # ---------------------------------------------------------------------------
+  tool:
+    # Timeout par défaut pour l'exécution d'un tool
+    default-timeout: ${TOOL_DEFAULT_TIMEOUT:30s}
+    # Timeout maximum (ne peut pas être dépassé)
+    max-timeout: ${TOOL_MAX_TIMEOUT:120s}
+    # Taille du pool d'exécuteurs pour tools parallèles
+    executor-pool-size: ${TOOL_EXECUTOR_POOL_SIZE:10}
+    
+  # ---------------------------------------------------------------------------
+  # Session Management
+  # ---------------------------------------------------------------------------
+  session:
+    # Timeout d'inactivité d'une session
+    timeout: ${SESSION_TIMEOUT:10m}
+    # Nombre maximum de sessions actives
+    max-count: ${SESSION_MAX_COUNT:1000}
+    # Intervalle de nettoyage des sessions orphelines
+    cleanup-interval: ${SESSION_CLEANUP_INTERVAL:5m}
+    
+  # ---------------------------------------------------------------------------
+  # SSE (Server-Sent Events) Configuration
+  # ---------------------------------------------------------------------------
+  sse:
+    # Intervalle des heartbeats (pour détecter les connexions orphelines)
+    heartbeat-interval: ${SSE_HEARTBEAT_INTERVAL:30s}
+    # Nombre maximum de connexions SSE simultanées
+    max-connections: ${SSE_MAX_CONNECTIONS:1000}
+    # Timeout de connexion
+    connection-timeout: ${SSE_CONNECTION_TIMEOUT:5m}
+    
+  # ---------------------------------------------------------------------------
+  # Security Settings
+  # ---------------------------------------------------------------------------
+  security:
+    # Rate Limiting (Bucket4j)
+    rate-limit:
+      # Requêtes autorisées par minute par IP
+      requests-per-minute: ${RATE_LIMIT_RPM:100}
+      # Capacité de burst (requêtes instantanées)
+      burst-capacity: ${RATE_LIMIT_BURST:20}
+      
+    # CORS Configuration
+    cors:
+      # Origines autorisées (vide = mode développement)
+      # Pour production, spécifier les domaines exacts
+      allowed-origins: ${CORS_ALLOWED_ORIGINS:}
+      # Méthodes HTTP autorisées
+      allowed-methods: GET,POST,OPTIONS
+      # Durée de mise en cache des pré-validations CORS
+      max-age: ${CORS_MAX_AGE:3600}
+
+# =============================================================================
+# Resilience4j Configuration
+# =============================================================================
+resilience4j:
+  # ---------------------------------------------------------------------------
+  # Circuit Breaker Configuration
+  # ---------------------------------------------------------------------------
+  circuitbreaker:
+    # Configuration par défaut
+    configs:
+      default:
+        # Type de fenêtre: COUNT_BASED ou TIME_BASED
+        sliding-window-type: COUNT_BASED
+        # Taille de la fenêtre (10 derniers appels)
+        sliding-window-size: 10
+        # Seuil de défaillance (50% d'échecs = circuit open)
+        failure-rate-threshold: 50
+        # Temps d'attente avant passage en half-open
+        wait-duration-in-open-state: 30s
+        # Appels autorisés en état half-open
+        permitted-number-of-calls-in-half-open-state: 3
+        # Seuil pour les appels lents
+        slow-call-duration-threshold: 10s
+        slow-call-rate-threshold: 80
+        # Exceptions enregistrées comme échecs
+        record-exceptions:
+          - java.io.IOException
+          - java.util.concurrent.TimeoutException
+        # Exceptions ignorées (ne comptent pas comme échecs)
+        ignore-exceptions:
+          - java.lang.IllegalArgumentException
+          
+    # Instances spécifiques par provider
+    instances:
+      openai:
+        base-config: default
+        sliding-window-size: 10
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 30s
+        slow-call-duration-threshold: 15s
+        
+      anthropic:
+        base-config: default
+        sliding-window-size: 10
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 30s
+        slow-call-duration-threshold: 15s
+        
+      ollama:
+        # Plus tolérant pour le local
+        sliding-window-size: 20
+        failure-rate-threshold: 70
+        wait-duration-in-open-state: 10s
+        slow-call-duration-threshold: 30s
+        slow-call-rate-threshold: 90
+
+  # ---------------------------------------------------------------------------
+  # Retry Configuration
+  # ---------------------------------------------------------------------------
+  retry:
+    configs:
+      default:
+        # Nombre maximum de tentatives
+        max-attempts: 3
+        # Durée d'attente entre les tentatives
+        wait-duration: 1s
+        # Activation du exponential backoff
+        enable-exponential-backoff: true
+        # Multiplicateur pour le backoff exponentiel
+        exponential-backoff-multiplier: 2.0
+        # Exceptions à retenter
+        retry-exceptions:
+          - java.io.IOException
+          - java.util.concurrent.TimeoutException
+        # Exceptions à ne pas retenter
+        ignore-exceptions:
+          - java.lang.IllegalArgumentException
+          
+    instances:
+      llmRetry:
+        max-attempts: 3
+        wait-duration: 1s
+        enable-exponential-backoff: true
+        exponential-backoff-multiplier: 2.0
+        retry-exceptions:
+          - java.io.IOException
+          - java.util.concurrent.TimeoutException
+          
+      externalServiceRetry:
+        max-attempts: 5
+        wait-duration: 500ms
+        enable-exponential-backoff: true
+        exponential-backoff-multiplier: 2.0
+        retry-exceptions:
+          - java.io.IOException
+
+  # ---------------------------------------------------------------------------
+  # Bulkhead Configuration (limitation des appels parallèles)
+  # ---------------------------------------------------------------------------
+  bulkhead:
+    configs:
+      default:
+        # Nombre maximum d'appels simultanés
+        max-concurrent-calls: 10
+        # Temps maximum d'attente pour acquire call
+        max-wait-duration: 0ms
+        
+    instances:
+      llmCalls:
+        max-concurrent-calls: 10
+        max-wait-duration: 0ms
+        
+      externalCalls:
+        max-concurrent-calls: 20
+        max-wait-duration: 50ms
+
+# =============================================================================
+# Server Configuration
+# =============================================================================
+server:
+  port: ${SERVER_PORT:8080}
+  # Configuration SSL (HTTPS)
+  ssl:
+    enabled: ${SERVER_SSL_ENABLED:false}
+    # Pour activer HTTPS en production:
+    # key-store: file:${SSL_KEYSTORE_PATH}
+    # key-store-password: ${SSL_KEYSTORE_PASSWORD}
+    # key-store-type: PKCS12
+    
+  # Configuration Tomcat
+  tomcat:
+    # Limite des threads pour les requêtes entrantes
+    threads:
+      max: 200
+      min-spare: 10
+    # Timeouts de connexion
+    connection-timeout: ${TOMCAT_CONNECTION_TIMEOUT:20s}
+    # Maximum de connexions keep-alive
+    max-keep-alive-requests: 100
+    keep-alive-timeout: ${TOMCAT_KEEP_ALIVE_TIMEOUT:60s}
+
+# =============================================================================
+# Actuator Configuration (Monitoring)
+# =============================================================================
+management:
+  endpoints:
+    web:
+      exposure:
+        # Exposer les endpoints essentiels pour le monitoring
+        include: health,info,prometheus,metrics,circuitbreakers,retries
+      base-path: /actuator
+  endpoint:
+    health:
+      show-details: when_authorized
+      probes:
+        enabled: true
+    prometheus:
+      enabled: true
+  # Export des métriques Prometheus
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+    tags:
+      application: ${spring.application.name}
+  # Tracing distribué (OpenTelemetry)
+  tracing:
+    enabled: ${TRACING_ENABLED:false}
+    sampling:
+      probability: 0.1
+
+# =============================================================================
+# Logging Configuration (JSON format pour production)
+# =============================================================================
+logging:
+  level:
+    # Log level global
+    root: INFO
+    # Packages de l'application
+    com.example.mcp: DEBUG
+    # Packages Spring
+    org.springframework.ai: INFO
+    org.springframework.web: INFO
+    # Désactiver les logs de debug des providers
+    org.springframework.ai.openai: INFO
+    org.springframework.ai.anthropic: INFO
+    # HttpClient logs (useful for debugging)
+    okhttp3: WARN
+    okHttp-Warning: WARN
+  # Format JSON pour ingestion par Loki/ELK/Grafana
+  pattern:
+    console: '{"timestamp":"%d{yyyy-MM-dd HH:mm:ss.SSS}","level":"%level","logger":"%logger{36}","message":"%replace(%msg){"[\r\n]","\\\\n}","thread":"%thread","context":"%mdc}"}%n'
+  # File appender (optionnel)
+  file:
+    name: ${LOG_FILE_PATH:/var/log/spring-ai-mcp-server.log}
+    max-size: 100MB
+    max-history: 30
+    total-size-cap: 3GB
+  # Logback encoder pour JSON
+  format:
+    json: true
+
+# =============================================================================
+# Jackson Configuration
+# =============================================================================
+spring:
+  jackson:
+    # Sérialisation
+    serialization:
+      write-dates-as-timestamps: false
+      indent-output: false
+    # Désérialisation
+    deserialization:
+      fail-on-unknown-properties: false
+      fail-on-ignored-properties: true
+    # Parsing
+    parser:
+      allow-unquoted-field-names: false
+      allow-single-quotes: true
+    # Dates
+    date-format: yyyy-MM-dd'T'HH:mm:ss.SSSXXX
+    time-zone: Europe/Paris
+
+# =============================================================================
+# Profile Configuration
+# =============================================================================
+# Activation avec: --spring.profiles.active=prod
+---
+spring:
+  config:
+    activate:
+      on-profile: development
+      
+# =============================================================================
+# Development Profile
+# =============================================================================
+spring:
+  ai:
+    openai:
+      api-key: ${OPENAI_API_KEY:demo-key}
+    anthropic:
+      api-key: ${ANTHROPIC_API_KEY:demo-key}
+    ollama:
+      base-url: http://localhost:11434
+      
+logging:
+  level:
+    com.example.mcp: DEBUG
+    org.springframework.ai: DEBUG
+    
+server:
+  ssl:
+    enabled: false
+
+---
+spring:
+  config:
+    activate:
+      on-profile: production
+      
+# =============================================================================
+# Production Profile
+# =============================================================================
+logging:
+  level:
+    com.example.mcp: INFO
+    root: WARN
+  file:
+    name: /var/log/spring-ai-mcp-server/application.log
+    
+server:
+  ssl:
+    enabled: true
+    # Configurer avec un keystore valide
+    key-store: ${SSL_KEYSTORE_PATH}
+    key-store-password: ${SSL_KEYSTORE_PASSWORD}
+    key-store-type: PKCS12
+    key-alias: ${SSL_KEY_ALIAS:}
+
+management:
+  tracing:
+    enabled: true
+    sampling:
+      probability: 0.1
+
+# =============================================================================
+# Test Profile
+# =============================================================================
+---
+spring:
+  config:
+    activate:
+      on-profile: test
+      
+spring:
+  ai:
+    openai:
+      api-key: test-openai-key
+    anthropic:
+      api-key: test-anthropic-key
+    ollama:
+      base-url: http://localhost:11434
+      
+logging:
+  level:
+    com.example.mcp: TRACE
