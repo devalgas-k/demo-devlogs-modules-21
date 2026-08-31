@@ -10,21 +10,21 @@
         <module name="demo-jdto-vs-records" />
         <module name="demo-spring-security-jwt-oauth2-oidc-mtls-rotation-des-secrets-durcissement-des-endpoints" />
         <module name="demo-jpms-main" />
-        <module name="demo-string-concat-vs-stringbuilder" />
         <module name="demo-processus-thread-stack-heap" />
+        <module name="demo-spring-beans-injection-lifecycle-2026" />
+        <module name="demo-qualifier-conditional-property" />
+        <module name="demo-string-concat-vs-stringbuilder" />
         <module name="demo-spring-beans-2026" />
         <module name="list-of-vs-arrays-aslist-demo" />
         <module name="spring-ai-mcp-server" />
         <module name="demo-n-plus-one" />
         <module name="demo-crash-boot" />
-        <module name="demo-qualifier-conditional-property" />
       </profile>
       <profile name="Annotation profile for demo-devlogs-modules-21" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="false">
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.34/lombok-1.18.34.jar" />
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.34/lombok-1.18.34.jar" />
         </processorPath>
         <module name="demo-transaction-interruptions" />
@@ -42,6 +42,7 @@
       <module name="demo-processus-thread-stack-heap" options="-parameters" />
       <module name="demo-qualifier-conditional-property" options="-parameters" />
       <module name="demo-spring-beans-2026" options="-parameters" />
+      <module name="demo-spring-beans-injection-lifecycle-2026" options="-parameters" />
       <module name="demo-spring-security-jwt-oauth2-oidc-mtls-rotation-des-secrets-durcissement-des-endpoints" options="-parameters" />
       <module name="demo-string-concat-vs-stringbuilder" options="-parameters" />
       <module name="demo-transaction-interruptions" options="-parameters" />

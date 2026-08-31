@@ -27,6 +27,7 @@
         <module>demo-spring-security-jwt-oauth2-oidc-mtls-rotation-des-secrets-durcissement-des-endpoints</module>
         <module>demo-string-concat-vs-stringbuilder</module>
         <module>demo-spring-beans-2026</module>
+        <module>demo-spring-beans-injection-lifecycle-2026</module>
         <module>mcp-spring-boot-spring-ai-demo</module>
         <module>list-of-vs-arrays-aslist-demo</module>
     </modules>
