@@ -12,7 +12,9 @@
         <module name="demo-jpms-main" />
         <module name="demo-processus-thread-stack-heap" />
         <module name="demo-spring-beans-injection-lifecycle-2026" />
+        <module name="demo-pagination-offset-cursor-keyset" />
         <module name="demo-qualifier-conditional-property" />
+        <module name="demo-beans-design-lifecycle" />
         <module name="demo-string-concat-vs-stringbuilder" />
         <module name="demo-spring-beans-2026" />
         <module name="list-of-vs-arrays-aslist-demo" />
@@ -26,6 +28,7 @@
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.34/lombok-1.18.34.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.34/lombok-1.18.34.jar" />
         </processorPath>
         <module name="demo-transaction-interruptions" />
       </profile>
@@ -33,12 +36,14 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="demo-beans-design-lifecycle" options="-parameters" />
       <module name="demo-crash-boot" options="-parameters" />
       <module name="demo-devlogs-modules-21" options="" />
       <module name="demo-jdto-vs-records" options="-parameters" />
       <module name="demo-jpms-main" options="-parameters" />
       <module name="demo-n-plus-one" options="-parameters" />
       <module name="demo-offsetdatetime-iso8601" options="-parameters" />
+      <module name="demo-pagination-offset-cursor-keyset" options="-parameters" />
       <module name="demo-processus-thread-stack-heap" options="-parameters" />
       <module name="demo-qualifier-conditional-property" options="-parameters" />
       <module name="demo-spring-beans-2026" options="-parameters" />

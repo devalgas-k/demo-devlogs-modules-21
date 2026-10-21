@@ -1,0 +1,238 @@
+Timing is on.
+                                                         version                                                          
+--------------------------------------------------------------------------------------------------------------------------
+ PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit
+(1 row)
+
+Time: 1.015 ms
+ shared_buffers 
+----------------
+ 128MB
+(1 row)
+
+Time: 0.087 ms
+ work_mem 
+----------
+ 4MB
+(1 row)
+
+Time: 0.105 ms
+CREATE TABLE
+Time: 8.140 ms
+CREATE INDEX
+Time: 0.737 ms
+DELETE 0
+Time: 0.935 ms
+INSERT 0 1000000
+Time: 4995.234 ms (00:04.995)
+VACUUM
+Time: 304.628 ms
+   id   
+--------
+ 100000
+  99999
+  99998
+  99997
+  99996
+  99995
+  99994
+  99993
+  99992
+  99991
+  99990
+  99989
+  99988
+  99987
+  99986
+  99985
+  99984
+  99983
+  99982
+  99981
+  99980
+  99979
+  99978
+  99977
+  99976
+  99975
+  99974
+  99973
+  99972
+  99971
+  99970
+  99969
+  99968
+  99967
+  99966
+  99965
+  99964
+  99963
+  99962
+  99961
+  99960
+  99959
+  99958
+  99957
+  99956
+  99955
+  99954
+  99953
+  99952
+  99951
+(50 rows)
+
+Time: 358.021 ms
+   id   
+--------
+ 100000
+  99999
+  99998
+  99997
+  99996
+  99995
+  99994
+  99993
+  99992
+  99991
+  99990
+  99989
+  99988
+  99987
+  99986
+  99985
+  99984
+  99983
+  99982
+  99981
+  99980
+  99979
+  99978
+  99977
+  99976
+  99975
+  99974
+  99973
+  99972
+  99971
+  99970
+  99969
+  99968
+  99967
+  99966
+  99965
+  99964
+  99963
+  99962
+  99961
+  99960
+  99959
+  99958
+  99957
+  99956
+  99955
+  99954
+  99953
+  99952
+  99951
+(50 rows)
+
+Time: 3.359 ms
+OFFSET_FIRST
+                                                              QUERY PLAN                                                               
+---------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=0.42..5.35 rows=50 width=117) (actual time=0.010..0.019 rows=50 loops=1)
+   Buffers: shared hit=5
+   ->  Index Scan using feed_seek_idx on feed  (cost=0.42..98593.80 rows=1000000 width=117) (actual time=0.009..0.015 rows=50 loops=1)
+         Index Cond: (tenant_id = 42)
+         Buffers: shared hit=5
+ Planning:
+   Buffers: shared hit=3
+ Planning Time: 0.060 ms
+ Execution Time: 0.029 ms
+(9 rows)
+
+Time: 0.963 ms
+OFFSET_DEEP_1
+                                                                 QUERY PLAN                                                                  
+---------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=88734.46..88739.39 rows=50 width=117) (actual time=581.819..581.840 rows=50 loops=1)
+   Buffers: shared hit=10179 read=15314 written=6558
+   ->  Index Scan using feed_seek_idx on feed  (cost=0.42..98593.80 rows=1000000 width=117) (actual time=0.008..554.393 rows=900050 loops=1)
+         Index Cond: (tenant_id = 42)
+         Buffers: shared hit=10179 read=15314 written=6558
+ Planning Time: 0.032 ms
+ Execution Time: 581.868 ms
+(7 rows)
+
+Time: 582.317 ms
+KEYSET_DEEP_1
+                                                             QUERY PLAN                                                              
+-------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=0.42..20.69 rows=50 width=117) (actual time=0.043..0.051 rows=50 loops=1)
+   Buffers: shared hit=4 read=1 written=1
+   ->  Index Scan using feed_seek_idx on feed  (cost=0.42..40378.67 rows=99628 width=117) (actual time=0.042..0.048 rows=50 loops=1)
+         Index Cond: ((tenant_id = 42) AND (ROW(created_at, id) < ROW('2026-01-01 02:46:40'::timestamp without time zone, 100001)))
+         Buffers: shared hit=4 read=1 written=1
+ Planning Time: 0.210 ms
+ Execution Time: 0.068 ms
+(7 rows)
+
+Time: 0.619 ms
+OFFSET_DEEP_2
+                                                                 QUERY PLAN                                                                  
+---------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=88734.46..88739.39 rows=50 width=117) (actual time=711.709..711.718 rows=50 loops=1)
+   Buffers: shared hit=3809 read=21684 written=4548
+   ->  Index Scan using feed_seek_idx on feed  (cost=0.42..98593.80 rows=1000000 width=117) (actual time=0.032..683.884 rows=900050 loops=1)
+         Index Cond: (tenant_id = 42)
+         Buffers: shared hit=3809 read=21684 written=4548
+ Planning Time: 0.023 ms
+ Execution Time: 711.732 ms
+(7 rows)
+
+Time: 712.019 ms
+KEYSET_DEEP_2
+                                                             QUERY PLAN                                                              
+-------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=0.42..20.69 rows=50 width=117) (actual time=0.017..0.026 rows=50 loops=1)
+   Buffers: shared hit=4 read=1
+   ->  Index Scan using feed_seek_idx on feed  (cost=0.42..40378.67 rows=99628 width=117) (actual time=0.016..0.022 rows=50 loops=1)
+         Index Cond: ((tenant_id = 42) AND (ROW(created_at, id) < ROW('2026-01-01 02:46:40'::timestamp without time zone, 100001)))
+         Buffers: shared hit=4 read=1
+ Planning Time: 0.105 ms
+ Execution Time: 0.041 ms
+(7 rows)
+
+Time: 0.429 ms
+OFFSET_DEEP_3
+                                                                 QUERY PLAN                                                                  
+---------------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=88734.46..88739.39 rows=50 width=117) (actual time=702.776..702.786 rows=50 loops=1)
+   Buffers: shared hit=1 read=25492
+   ->  Index Scan using feed_seek_idx on feed  (cost=0.42..98593.80 rows=1000000 width=117) (actual time=0.063..675.508 rows=900050 loops=1)
+         Index Cond: (tenant_id = 42)
+         Buffers: shared hit=1 read=25492
+ Planning Time: 0.034 ms
+ Execution Time: 702.799 ms
+(7 rows)
+
+Time: 703.029 ms
+KEYSET_DEEP_3
+                                                             QUERY PLAN                                                              
+-------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=0.42..20.69 rows=50 width=117) (actual time=0.021..0.030 rows=50 loops=1)
+   Buffers: shared hit=3 read=2
+   ->  Index Scan using feed_seek_idx on feed  (cost=0.42..40378.67 rows=99628 width=117) (actual time=0.020..0.026 rows=50 loops=1)
+         Index Cond: ((tenant_id = 42) AND (ROW(created_at, id) < ROW('2026-01-01 02:46:40'::timestamp without time zone, 100001)))
+         Buffers: shared hit=3 read=2
+ Planning Time: 0.078 ms
+ Execution Time: 0.046 ms
+(7 rows)
+
+Time: 0.314 ms
+ identical_pages 
+-----------------
+ t
+(1 row)
+
+Time: 153.217 ms

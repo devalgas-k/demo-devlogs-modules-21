@@ -30,6 +30,8 @@
         <module>demo-spring-beans-injection-lifecycle-2026</module>
         <module>mcp-spring-boot-spring-ai-demo</module>
         <module>list-of-vs-arrays-aslist-demo</module>
+        <module>demo-beans-design-lifecycle</module>
+        <module>demo-pagination-offset-cursor-keyset</module>
     </modules>
 
     <properties>
