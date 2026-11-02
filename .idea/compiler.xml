@@ -21,6 +21,7 @@
         <module name="spring-ai-mcp-server" />
         <module name="demo-n-plus-one" />
         <module name="demo-crash-boot" />
+        <module name="product-api-concurrency-comparison" />
       </profile>
       <profile name="Annotation profile for demo-devlogs-modules-21" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
@@ -52,6 +53,7 @@
       <module name="demo-string-concat-vs-stringbuilder" options="-parameters" />
       <module name="demo-transaction-interruptions" options="-parameters" />
       <module name="list-of-vs-arrays-aslist-demo" options="-parameters" />
+      <module name="product-api-concurrency-comparison" options="-parameters --enable-preview" />
       <module name="spring-ai-mcp-server" options="-parameters" />
     </option>
   </component>

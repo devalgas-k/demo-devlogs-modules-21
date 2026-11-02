@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: product-api-concurrency-comparison
+server:
+  error:
+    include-message: never
+demo:
+  aggregation:
+    timeout: 500ms

@@ -32,6 +32,7 @@
         <module>list-of-vs-arrays-aslist-demo</module>
         <module>demo-beans-design-lifecycle</module>
         <module>demo-pagination-offset-cursor-keyset</module>
+        <module>product-api-concurrency-comparison</module>
     </modules>
 
     <properties>
